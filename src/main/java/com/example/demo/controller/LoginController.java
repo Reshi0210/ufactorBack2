@@ -5,6 +5,7 @@ package com.example.demo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DTOs.TokenDto;
 import com.example.demo.models.LoginRequest;
 import com.example.demo.service.TokenService;
 
@@ -37,11 +39,11 @@ public class LoginController {
 	
 	
 	@PostMapping("/login")
-	public String login(@RequestBody LoginRequest userLogin ) {
+	public ResponseEntity<TokenDto> login(@RequestBody LoginRequest userLogin ) {
 		
 	Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password()));
 		
-		return tokenService.generateToken(authentication);
+		return ResponseEntity.ok( new TokenDto (tokenService.generateToken(authentication)));
 		
 		
 		
