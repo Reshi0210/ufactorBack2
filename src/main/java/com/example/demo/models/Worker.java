@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -35,8 +36,9 @@ public class Worker {
 
 	@Column(name = "last_name")
 	private String lastName;
-
-	@Column(name = "ci")
+    
+	
+	@Column(name = "ci",unique=true)
 	private String ci;
 
 	@Column(name = "expedient_number")
@@ -57,6 +59,10 @@ public class Worker {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "defense_place")
 	private defensePlace defensePlace;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="active")
+	private active active;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "department_id")
@@ -211,6 +217,26 @@ public class Worker {
 	public void setExpedientNumber(String expedientNumber) {
 		this.expedientNumber = expedientNumber;
 	}
+
+
+
+	public active getActive() {
+		return active;
+	}
+
+
+
+	public void setActive(active active) {
+		this.active = active;
+	}
+
+
+
+
+
+
+	
+	
 	
 	
 

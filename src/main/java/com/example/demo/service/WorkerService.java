@@ -32,20 +32,24 @@ public class WorkerService {
 	@Autowired
 	WorkerRepository workerRepository;
 	DepartmentRepository departmentRepository;
+	
+	
 
 	public List<Worker> allWorkers() {
-
-		return workerRepository.findAll();
+		
+       return workerRepository.findAll();
 	}
+	
+	
 
 	public ResponseEntity<Worker> createWorker(Worker w1) {
-
 		
         workerRepository.save(w1);
-
-		return ResponseEntity.ok(w1);
+        return ResponseEntity.ok(w1);
 
 	}
+	
+	
 
 	public ResponseEntity<Worker> findByIdl(long CI) {
 
@@ -53,47 +57,57 @@ public class WorkerService {
 		return ResponseEntity.ok(w1);
 
 	}
+	
+	
+	
+	
 
 	public ResponseEntity<Worker> updateWorker(long CI, Worker w2) {
 
 		Worker w1 = workerRepository.findById(CI).orElseThrow(() -> new ResourceNotFoundException("Missmatch error"));
-
-		w2.setId(w1.getId());
-
-		workerRepository.save(w2);
-
-		return ResponseEntity.ok(w2);
+        w2.setId(w1.getId());
+        workerRepository.save(w2);
+        return ResponseEntity.ok(w2);
 
 	}
+	
+	
 
 	public ResponseEntity<Map<String, Boolean>> deleteWorker(long CI) {
 
 		Worker w1 = workerRepository.findById(CI).orElseThrow(() -> new ResourceNotFoundException("Missmatch error"));
-
-		workerRepository.delete(w1);
-
-		Map<String, Boolean> response = new HashMap<>();
+        workerRepository.delete(w1);
+        Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
 
 	///////////// filters//////////////////////////////////////////////////////
+	
+	
 
 	public List<Worker> filter(String name) {
 
 		return workerRepository.findByFirstNameContaining(name);
 
 	}
+	
+	
+	public List<Worker> findBySecondName(String secondName) {
+		return workerRepository.findBySecondNameContaining(secondName);
+	}
+	
 
 	public List<Worker> filterS(sex sex) {
 
 		return workerRepository.findBySex(sex);
 
 	}
+	
+	
 
 	public List<Worker> fil(sex sex, race race, String depa, contractType contractType, defensePlace defensePlace) {
-
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+       ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 
 		if (depa != null) {
 			department depar = new department();
@@ -110,29 +124,25 @@ public class WorkerService {
 
 		return workerRepository.findAll(exampleQuery);
 	}
+	
+	
 
 	public List<Worker> filterByExample(Worker worker) {
 
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-
-		Example<Worker> exampleQuery = Example.of(worker, matcher);
-
-		return workerRepository.findAll(exampleQuery);
+        Example<Worker> exampleQuery = Example.of(worker, matcher);
+        return workerRepository.findAll(exampleQuery);
 	}
-
-	public List<Worker> findBySecondName(String secondName) {
-		return workerRepository.findBySecondNameContaining(secondName);
-	}
-
-	public List<Worker> filterE(Worker worker, String level) {
+	
+	
+	
+    public List<Worker> filterE(Worker worker, String level) {
 
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+        Example<Worker> exampleQuery = Example.of(worker, matcher);
+        LinkedList<Worker> result = new LinkedList<>();
 
-		Example<Worker> exampleQuery = Example.of(worker, matcher);
-
-		LinkedList<Worker> result = new LinkedList<>();
-
-		if (level != "" && level!=null) {
+		if (level != "" && level != null) {
 			workerRepository.findAll(exampleQuery).forEach((w) -> {
 				for (Scholarship l : w.getScholarShiplist()) {
 					if (l.getScholarLevel().toString().equals(level)) {
@@ -145,21 +155,27 @@ public class WorkerService {
 
 			return (List<Worker>) result;
 		} else {
-			return workerRepository.findAll(exampleQuery);}
+			return workerRepository.findAll(exampleQuery);
 		}
-	
-	
-	public List<Worker> filterByCriteria( String criteria){
-	
-	LinkedList<Worker> result = new LinkedList<>();
-	
-	result.addAll(workerRepository.findByFirstNameStartsWith(criteria));
-	
-	if(result.isEmpty()){
-		result.addAll(workerRepository.findByCiStartsWith(criteria)) ;
 	}
+    
+
+	public List<Worker> filterByCriteria(String criteria) {
 		
-	return (List<Worker>) result;}
-	 
+    LinkedList<Worker> result = new LinkedList<>();
+
+		result.addAll(workerRepository.findByFirstNameStartsWith(criteria));
+
+		if (result.isEmpty()) {
+			result.addAll(workerRepository.findByCiStartsWith(criteria));
+		}
+
+		return (List<Worker>) result;
+	}
+	
+	
+
+	
+	
 
 }

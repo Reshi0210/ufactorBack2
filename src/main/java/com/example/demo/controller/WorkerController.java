@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,97 +29,93 @@ import com.example.demo.service.WorkerService;
 @RestController
 @RequestMapping("/api/v1")
 public class WorkerController {
-	
+
 	@Autowired
 	WorkerService workerService;
 
-	
 	@GetMapping("/all")
-	public List<Worker> FindAllWorkers(){
-		
+	public List<Worker> FindAllWorkers() {
+
 		return workerService.allWorkers();
 	}
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<Worker> createWorker(@RequestBody Worker w1) {
-		return workerService.createWorker( w1);
+		return workerService.createWorker(w1);
 	}
-    
+
 	@GetMapping("/findById/{CI}")
-	public ResponseEntity<Worker> findByIdl(@PathVariable long CI){
-		
-	return workerService.findByIdl(CI);
+	public ResponseEntity<Worker> findByIdl(@PathVariable long CI) {
+
+		return workerService.findByIdl(CI);
 	}
-	
+
 	@PutMapping("update/{CI}")
-	public ResponseEntity<Worker> updateWorker(@PathVariable long CI,@RequestBody Worker w2){
+	public ResponseEntity<Worker> updateWorker(@PathVariable long CI, @RequestBody Worker w2) {
 		return workerService.updateWorker(CI, w2);
 	}
-	
+
 	@DeleteMapping("delete/{CI}")
-	public  ResponseEntity<Map<String,Boolean>> deleteWorker(@PathVariable long CI) {
-		
+	public ResponseEntity<Map<String, Boolean>> deleteWorker(@PathVariable long CI) {
+
 		return workerService.deleteWorker(CI);
 	}
-	
-	
-	/////////////////filter//////////////////////////////////////////////////////////////
-	
+
+	///////////////// filter//////////////////////////////////////////////////////////////
+
 	@GetMapping("/filter")
-	public List<Worker> Filter(@RequestParam ("firstName") String firstName){
-		
-		return workerService.filter(firstName);}
-	
+	public List<Worker> Filter(@RequestParam("firstName") String firstName) {
+
+		return workerService.filter(firstName);
+	}
+
 	@GetMapping("/filterS")
-	public List<Worker> FilterS(@RequestParam ("sex") sex sex){
-		
-		return workerService.filterS(sex);}
-	
+	public List<Worker> FilterS(@RequestParam("sex") sex sex) {
+
+		return workerService.filterS(sex);
+	}
+
 	@Nullable
 	@GetMapping("/fil")
-	public List<Worker> Fil(@RequestParam ("sex") @Nullable sex sex,
-			@RequestParam("race") @Nullable  race race,
-			@RequestParam("depa") @Nullable  String depa,
-	        @RequestParam("contractType") @Nullable contractType  contractType,
-	        @RequestParam("defensePlace") @Nullable defensePlace  defensePlace)
-	       
+	public List<Worker> Fil(@RequestParam("sex") @Nullable sex sex, @RequestParam("race") @Nullable race race,
+			@RequestParam("depa") @Nullable String depa,
+			@RequestParam("contractType") @Nullable contractType contractType,
+			@RequestParam("defensePlace") @Nullable defensePlace defensePlace)
+
 	{
-	
-		return workerService.fil(sex,race,depa,contractType,defensePlace);}
-	
-	
+
+		return workerService.fil(sex, race, depa, contractType, defensePlace);
+	}
+
 	@Nullable
 	@PostMapping("/filterByExample")
-	public List<Worker> filterByExample(@RequestBody Worker worker){
-		
+	public List<Worker> filterByExample(@RequestBody Worker worker) {
+
 		return workerService.filterByExample(worker);
-		
-		
-		
-		
+
 	}
+
 	@Nullable
 	@GetMapping("/f")
-	public List<Worker> filterSecondName(@RequestParam("secondName") String secondName){
-		
-		
+	public List<Worker> filterSecondName(@RequestParam("secondName") String secondName) {
+
 		return workerService.findBySecondName(secondName);
 	}
-	
+
 	@Nullable
 	@PostMapping("/filterE")
-	public List<Worker> filterByE(@RequestBody Worker worker,  @RequestHeader  ("level") @Nullable String level){
-		
-		
-		return workerService.filterE(worker,level);
-	
-}    
+	public List<Worker> filterByE(@RequestBody Worker worker, @RequestHeader("level") @Nullable String level) {
+
+		return workerService.filterE(worker, level);
+
+	}
+
 	@PostMapping("/filterByCriteria")
-	public List<Worker> filterByCriteria(@RequestHeader ("criteria")  String criteria){
-		
+	public List<Worker> filterByCriteria(@RequestHeader("criteria") String criteria) {
+
 		return workerService.filterByCriteria(criteria);
 	}
 	
-	
-	}
 
+
+}
