@@ -11,7 +11,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import utilities.AgeUtilities;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.models.PoliticIntegration;
 import com.example.demo.models.Scholarship;
@@ -32,6 +32,7 @@ public class WorkerService {
 	@Autowired
 	WorkerRepository workerRepository;
 	DepartmentRepository departmentRepository;
+	
 	
 	
 
@@ -136,27 +137,53 @@ public class WorkerService {
 	
 	
 	
-    public List<Worker> filterE(Worker worker, String level) {
+    public List<Worker> filterE(Worker worker, String level,Integer min,Integer max) {
 
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
         Example<Worker> exampleQuery = Example.of(worker, matcher);
-        LinkedList<Worker> result = new LinkedList<>();
+        List<Worker> result = new LinkedList<>();
+        List<Worker> temporal = new LinkedList<>();
+        List<Worker> result2 = new LinkedList<>();
+        boolean flag1=false;
+        boolean flag2=false;
+        
+        
+        temporal=workerRepository.findAll(exampleQuery);
 
 		if (level != "" && level != null) {
-			workerRepository.findAll(exampleQuery).forEach((w) -> {
+			flag1=true;
+			temporal.forEach((w) -> {
 				for (Scholarship l : w.getScholarShiplist()) {
 					if (l.getScholarLevel().toString().equals(level)) {
 						result.add(w);
-					}
-
-				}
-
-			});
-
-			return (List<Worker>) result;
-		} else {
-			return workerRepository.findAll(exampleQuery);
-		}
+					}}});}
+		
+		if ( min!=null && max!=null) {
+			flag2=true;
+			
+			if(!flag1) {
+			temporal.forEach((w)->{
+				if(AgeUtilities.Between(min, max, AgeUtilities.CalculateAge(w.getCi()))) {
+					result.add(w);
+				}}); }
+			else {
+				result.forEach((w)->{
+					if(AgeUtilities.Between(min, max, AgeUtilities.CalculateAge(w.getCi()))) {
+						result2.add(w);
+					}});}
+			}
+		
+		
+		
+		if (!flag1&&!flag2)
+			return temporal;
+		
+		if (flag1&&flag2)
+			return result2;
+		
+		else {
+			return  (List<Worker>) result;}
+		
 	}
     
 

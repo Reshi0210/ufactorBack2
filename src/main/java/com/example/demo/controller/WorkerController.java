@@ -25,6 +25,8 @@ import com.example.demo.models.race;
 import com.example.demo.models.sex;
 import com.example.demo.service.WorkerService;
 
+import utilities.AgeUtilities;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
@@ -104,9 +106,13 @@ public class WorkerController {
 
 	@Nullable
 	@PostMapping("/filterE")
-	public List<Worker> filterByE(@RequestBody Worker worker, @RequestHeader("level") @Nullable String level) {
+	public List<Worker> filterByE(@RequestBody Worker worker, @RequestHeader("level") @Nullable String level
+			,@RequestHeader("min") @Nullable Integer min,
+			@RequestHeader("max") @Nullable Integer max
+			
+			) {
 
-		return workerService.filterE(worker, level);
+		return workerService.filterE(worker, level,min,max);
 
 	}
 
@@ -114,6 +120,13 @@ public class WorkerController {
 	public List<Worker> filterByCriteria(@RequestHeader("criteria") String criteria) {
 
 		return workerService.filterByCriteria(criteria);
+	}
+	
+	@GetMapping("/age")
+	public Integer edad() {
+		return AgeUtilities.CalculateAge("94100228982");
+		
+		
 	}
 	
 
