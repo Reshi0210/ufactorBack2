@@ -65,44 +65,7 @@ public class WorkerController {
 
 	///////////////// filter//////////////////////////////////////////////////////////////
 
-	@GetMapping("/filter")
-	public List<Worker> Filter(@RequestParam("firstName") String firstName) {
 
-		return workerService.filter(firstName);
-	}
-
-	@GetMapping("/filterS")
-	public List<Worker> FilterS(@RequestParam("sex") sex sex) {
-
-		return workerService.filterS(sex);
-	}
-
-	@Nullable
-	@GetMapping("/fil")
-	public List<Worker> Fil(@RequestParam("sex") @Nullable sex sex, @RequestParam("race") @Nullable race race,
-			@RequestParam("depa") @Nullable String depa,
-			@RequestParam("contractType") @Nullable contractType contractType,
-			@RequestParam("defensePlace") @Nullable defensePlace defensePlace)
-
-	{
-
-		return workerService.fil(sex, race, depa, contractType, defensePlace);
-	}
-
-	@Nullable
-	@PostMapping("/filterByExample")
-	public List<Worker> filterByExample(@RequestBody Worker worker) {
-
-		return workerService.filterByExample(worker);
-
-	}
-
-	@Nullable
-	@GetMapping("/f")
-	public List<Worker> filterSecondName(@RequestParam("secondName") String secondName) {
-
-		return workerService.findBySecondName(secondName);
-	}
 
 	@Nullable
 	@PostMapping("/filterE")
@@ -122,12 +85,7 @@ public class WorkerController {
 		return workerService.filterByCriteria(criteria);
 	}
 	
-	@GetMapping("/age")
-	public Integer edad() {
-		return AgeUtilities.CalculateAge("94100228982");
-		
-		
-	}
+
 	
 
 

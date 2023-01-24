@@ -84,59 +84,9 @@ public class WorkerService {
 	}
 
 	///////////// filters//////////////////////////////////////////////////////
-	
-	
 
-	public List<Worker> filter(String name) {
-
-		return workerRepository.findByFirstNameContaining(name);
-
-	}
-	
-	
-	public List<Worker> findBySecondName(String secondName) {
-		return workerRepository.findBySecondNameContaining(secondName);
-	}
 	
 
-	public List<Worker> filterS(sex sex) {
-
-		return workerRepository.findBySex(sex);
-
-	}
-	
-	
-
-	public List<Worker> fil(sex sex, race race, String depa, contractType contractType, defensePlace defensePlace) {
-       ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-
-		if (depa != null) {
-			department depar = new department();
-			depar.setDepartamentName(depa);
-			worker.setDepartment(depar);
-		}
-
-		worker.setSex(sex);
-		worker.setRace(race);
-		worker.setContractType(contractType);
-		worker.setDefensePlace(defensePlace);
-
-		Example<Worker> exampleQuery = Example.of(worker, matcher);
-
-		return workerRepository.findAll(exampleQuery);
-	}
-	
-	
-
-	public List<Worker> filterByExample(Worker worker) {
-
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-        Example<Worker> exampleQuery = Example.of(worker, matcher);
-        return workerRepository.findAll(exampleQuery);
-	}
-	
-	
-	
     public List<Worker> filterE(Worker worker, String level,Integer min,Integer max) {
 
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
@@ -156,6 +106,7 @@ public class WorkerService {
 				for (Scholarship l : w.getScholarShiplist()) {
 					if (l.getScholarLevel().toString().equals(level)) {
 						result.add(w);
+						break;
 					}}});}
 		
 		if ( min!=null && max!=null) {
