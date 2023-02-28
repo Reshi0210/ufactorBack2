@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -58,18 +59,6 @@ public class securityConf {
 		 
 		 return new ProviderManager(authProvider);
 	}
-	
-
-	@Bean
-	public UserDetailsService userDetails() {
-		var usd = new InMemoryUserDetailsManager();
-
-		var u1 = User.withUsername("Rafa").password("{noop}123").roles("Admin").build();
-
-		usd.createUser(u1);
-
-		return usd;
-	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -86,7 +75,7 @@ public class securityConf {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return  NoOpPasswordEncoder.getInstance();
 	}
 
 	@Bean
