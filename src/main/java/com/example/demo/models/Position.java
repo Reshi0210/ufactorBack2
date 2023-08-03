@@ -15,9 +15,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import lombok.Data;
 
 @Entity
 @Table(name="position")
+@Data
 public class Position {
 
 	@Id
@@ -39,40 +41,7 @@ public class Position {
 	
 	
 
-	public Position() {
-	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getPositionName() {
-		return positionName;
-	}
-
-	public void setPositionName(String positionName) {
-		this.positionName = positionName;
-	}
-
-	public category getCategory() {
-		return category;
-	}
-
-	public void setCategory(category category) {
-		this.category = category;
-	}
-
-	public ScaleGroup getScaleGroup() {
-		return scaleGroup;
-	}
-
-	public void setScaleGroup(ScaleGroup scaleGroup) {
-		this.scaleGroup = scaleGroup;
-	}
 	
 	
 	

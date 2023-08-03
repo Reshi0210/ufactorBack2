@@ -2,8 +2,13 @@ package com.example.demo.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -36,9 +41,14 @@ public class WorkerController {
 	WorkerService workerService;
 
 	@GetMapping("/all")
-	public List<Worker> FindAllWorkers() {
+	public Page<Worker> FindAllWorkers(
+			  @RequestHeader @Nullable Integer page
+			, @RequestHeader @Nullable Integer size
+	) {
+    if(page==null)page=0;
+    if(size==null)size=50;
 
-		return workerService.allWorkers();
+		return workerService.allWorkers(page,size);
 	}
 
 	@PostMapping("/create")
@@ -69,13 +79,12 @@ public class WorkerController {
 
 	@Nullable
 	@PostMapping("/filterE")
-	public List<Worker> filterByE(@RequestBody Worker worker, @RequestHeader("level") @Nullable String level
-			,@RequestHeader("min") @Nullable Integer min,
-			@RequestHeader("max") @Nullable Integer max
-			
-			) {
+	public List<Worker>filterByE(@RequestBody Worker workerExample
+			,@RequestHeader Integer min
+			,@RequestHeader Integer max) {
+		return workerService.filterE(workerExample,min,max);
 
-		return workerService.filterE(worker, level,min,max);
+
 
 	}
 

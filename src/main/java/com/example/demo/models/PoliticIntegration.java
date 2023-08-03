@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "politicintegration")
+@Data
 public class PoliticIntegration {
 
 	@Id
@@ -18,23 +21,6 @@ public class PoliticIntegration {
 	@Column(name = "organ")
 	private String organ;
 
-	public PoliticIntegration() {
-	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getOrgan() {
-		return organ;
-	}
-
-	public void setOrgan(String organ) {
-		this.organ = organ;
-	}
 
 }

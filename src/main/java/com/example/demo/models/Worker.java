@@ -19,14 +19,22 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import org.hibernate.annotations.Formula;
+import org.springframework.beans.factory.annotation.Autowired;
+import utilities.AgeUtilities;
 
 @Entity
 @Table
+@Data
 public class Worker {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "age")
+	private Integer age;
 
 	@Column(name = "first_name")
 	private String firstName;
@@ -76,159 +84,14 @@ public class Worker {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Position position;
 
-	@ManyToMany(fetch = FetchType.LAZY )
-	@JoinTable(name = "worker_scholarship", 
-	joinColumns = @JoinColumn(name = "worker_id"), 
-	inverseJoinColumns = @JoinColumn(name = "scholarship_id"))
-	private Set<Scholarship> scholarShiplist = new HashSet<>();
-	
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "worker_politicintegration", 
-	joinColumns = @JoinColumn(name = "worker_id"), 
-	inverseJoinColumns = @JoinColumn(name = "politicintegration_id"))
-	private Set<PoliticIntegration> politiclist = new HashSet<>();
-
-	public Worker() {
-	}
-	
-	
-
-	public Set<Scholarship> getScholarShiplist() {
-		return scholarShiplist;
-	}
+	@ManyToOne(fetch = FetchType.EAGER,optional = false)
+	@JoinColumn(name = "scholarShip_id")
+	// @JsonProperty(access = Access.WRITE_ONLY)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private Scholarship scholarShip ;
 
 
 
-	public void setScholarShiplist(Set<Scholarship> scholarShiplist) {
-		this.scholarShiplist = scholarShiplist;
-	}
-
-
-
-	public Set<PoliticIntegration> getPoliticlist() {
-		return politiclist;
-	}
-
-	public void setPoliticlist(Set<PoliticIntegration> politiclist) {
-		this.politiclist = politiclist;
-	}
-
-
-
-	
-
-	public defensePlace getDefensePlace() {
-		return defensePlace;
-	}
-
-
-
-	public void setDefensePlace(defensePlace defensePlace) {
-		this.defensePlace = defensePlace;
-	}
-
-
-
-	public Position getPosition() {
-		return position;
-	}
-
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
-	public department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(department department) {
-		this.department = department;
-	}
-
-	public race getRace() {
-		return race;
-	}
-
-	public void setRace(race race) {
-		this.race = race;
-	}
-
-	public contractType getContractType() {
-		return contractType;
-	}
-
-	public void setContractType(contractType contractType) {
-		this.contractType = contractType;
-	}
-
-	public sex getSex() {
-		return sex;
-	}
-
-	public void setSex(sex sex) {
-		this.sex = sex;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getSecondName() {
-		return secondName;
-	}
-
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getCi() {
-		return ci;
-	}
-
-	public void setCi(String ci) {
-		this.ci = ci;
-	}
-
-	public String getExpedientNumber() {
-		return expedientNumber;
-	}
-
-	public void setExpedientNumber(String expedientNumber) {
-		this.expedientNumber = expedientNumber;
-	}
-
-
-
-	public active getActive() {
-		return active;
-	}
-
-
-
-	public void setActive(active active) {
-		this.active = active;
-	}
 
 
 

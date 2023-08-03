@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="scholarship")
+@Data
 public class Scholarship {
 	
 	
@@ -29,32 +32,7 @@ public class Scholarship {
 	
 	
 
-	public Scholarship() {
-	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getScholarName() {
-		return scholarName;
-	}
-
-	public void setScholarName(String scholarName) {
-		this.scholarName = scholarName;
-	}
-
-	public scholarLevel getScholarLevel() {
-		return ScholarLevel;
-	}
-
-	public void setScholarLevel(scholarLevel scholarLevel) {
-		ScholarLevel = scholarLevel;
-	}
 	
 	
 	

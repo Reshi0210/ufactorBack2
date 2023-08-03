@@ -1,26 +1,19 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import com.example.demo.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 import utilities.AgeUtilities;
 import com.example.demo.exceptions.ResourceNotFoundException;
-import com.example.demo.models.PoliticIntegration;
-import com.example.demo.models.Scholarship;
-import com.example.demo.models.Worker;
-import com.example.demo.models.contractType;
-import com.example.demo.models.defensePlace;
-import com.example.demo.models.department;
-import com.example.demo.models.race;
-import com.example.demo.models.sex;
 import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.repository.WorkerRepository;
 
@@ -36,15 +29,15 @@ public class WorkerService {
 	
 	
 
-	public List<Worker> allWorkers() {
+	public Page<Worker> allWorkers(Integer page, Integer size) {
 		
-       return workerRepository.findAll();
+       return workerRepository.findAll(PageRequest.of(page,size));
 	}
 	
 	
 
 	public ResponseEntity<Worker> createWorker(Worker w1) {
-		
+		w1.setAge(AgeUtilities.CalculateAge(w1.getCi()));
         workerRepository.save(w1);
         return ResponseEntity.ok(w1);
 
@@ -87,59 +80,33 @@ public class WorkerService {
 
 	
 
-    public List<Worker> filterE(Worker worker, String level,Integer min,Integer max) {
+    public List<Worker>  filterE(Worker worker,Integer min,Integer max) {
+		scholarLevel ScholarLevel;
+		String department;
 
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-        Example<Worker> exampleQuery = Example.of(worker, matcher);
-        List<Worker> result = new LinkedList<>();
-        List<Worker> temporal = new LinkedList<>();
-        List<Worker> result2 = new LinkedList<>();
-        boolean flag1=false;
-        boolean flag2=false;
-        
-        
-        temporal=workerRepository.findAll(exampleQuery);
 
-		if (level != "" && level != null) {
-			flag1=true;
-			temporal.forEach((w) -> {
-				for (Scholarship l : w.getScholarShiplist()) {
-					if (l.getScholarLevel().toString().equals(level)) {
-						result.add(w);
-						break;
-					}}});}
-		
-		if ( min!=null && max!=null) {
-			flag2=true;
-			
-			if(!flag1) {
-			temporal.forEach((w)->{
-				if(AgeUtilities.Between(min, max, AgeUtilities.CalculateAge(w.getCi()))) {
-					result.add(w);
-				}}); }
-			else {
-				result.forEach((w)->{
-					if(AgeUtilities.Between(min, max, AgeUtilities.CalculateAge(w.getCi()))) {
-						result2.add(w);
-					}});}
-			}
-		
-		
-		
-		if (!flag1&&!flag2)
-			return temporal;
-		
-		if (flag1&&flag2)
-			return result2;
-		
-		else {
-			return  (List<Worker>) result;}
-		
+		if (worker.getScholarShip() != null) ScholarLevel = worker.getScholarShip().getScholarLevel();
+		else ScholarLevel = null;
+
+		if (worker.getDepartment() != null) department = worker.getDepartment().getDepartamentName();
+		else department = null;
+
+		String firstName=worker.getFirstName();
+		String secondName=worker.getSecondName();
+		String lastName=worker.getLastName();
+		race race=worker.getRace();
+		contractType contractType=worker.getContractType();
+		String expedientNumber=worker.getExpedientNumber();
+		active active=worker.getActive();
+		sex sex=worker.getSex();
+		defensePlace defensePlace=worker.getDefensePlace();
+		return workerRepository.filter(ScholarLevel,firstName,secondName,lastName,race,contractType,expedientNumber,active,sex,defensePlace,department,min,max);
+
 	}
-    
+
 
 	public List<Worker> filterByCriteria(String criteria) {
-		
+
     LinkedList<Worker> result = new LinkedList<>();
 
 		result.addAll(workerRepository.findByFirstNameStartsWith(criteria));
