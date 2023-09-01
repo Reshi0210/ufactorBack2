@@ -39,8 +39,8 @@ public interface WorkerRepository extends PagingAndSortingRepository< Worker, Lo
 			"(:active is null or w.active=:active)and"+
 			"(:sex is null or w.sex=:sex)and"+
 			"(:defensePlace is null or w.defensePlace=:defensePlace) and"+
-			"(:department is null or w.department.departamentName=:department) and" +
-			"(w.age between :min and :max)"
+			"(:department is null or w.department.departamentName=:department) and " +
+			"(w.age between :min and :max )"
 
 	)
 	public List<Worker> filter(@Param("ScholarLevel") scholarLevel ScholarLeve,
