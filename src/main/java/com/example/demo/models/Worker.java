@@ -82,6 +82,9 @@ public class Worker {
 	private Adress adress;
 
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="careerPlan_id")
+	private CareerPlan careerPlan;
 
 
 
