@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.example.demo.models.scholarLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -59,5 +61,8 @@ public class ScholarShipService {
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+
+	public List<Scholarship> findScholarshipByScholarLevel(scholarLevel level) {
+		return scholarShipRepository.findScholarshipByScholarLevel(level);}
 
 }
