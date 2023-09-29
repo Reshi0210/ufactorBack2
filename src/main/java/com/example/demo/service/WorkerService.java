@@ -38,6 +38,7 @@ public class WorkerService {
 
 	public ResponseEntity<Worker> createWorker(Worker w1) {
 		w1.setAge(AgeUtilities.CalculateAge(w1.getCi()));
+		setDefaultCareerPlan(w1);
         workerRepository.save(w1);
         return ResponseEntity.ok(w1);
 
@@ -120,7 +121,37 @@ public class WorkerService {
 	
 	
 
-	
+	private void setDefaultCareerPlan(Worker w){
+		CareerPlan c=new CareerPlan();
+		Scholarship ds=new Scholarship();
+		ds.setId(5);
+		c.setDoctorado(ds);
+		c.setDoctoradoP(ds);
+		c.setDoctoradoF(ds);
+		c.setAcreditacion(ds);
+		c.setAcreditacionF(ds);
+		c.setAcreditacionP(ds);
+		c.setFormacionPiramidal(ds);
+		c.setFormacionPiramidalP(ds);
+		c.setFormacionPiramidalF(ds);
+		c.setIdiomaelemental(ds);
+		c.setIdiomaelementalP(ds);
+		c.setIdiomaelementalF(ds);
+		c.setIdiomaOptimo(ds);
+		c.setIdiomaOptimoP(ds);
+		c.setIdiomaOptimoF(ds);
+		c.setMaster(ds);
+		c.setMasterP(ds);
+		c.setMasterF(ds);
+		c.setPosgrado1(ds);
+		c.setPosgrado1P(ds);
+		c.setPosgrado1F(ds);
+		c.setPosgrado2(ds);
+		c.setPosgrado2P(ds);
+		c.setPosgrado2F(ds);
+		w.setCareerPlan(c);
+
+	}
 	
 
 }

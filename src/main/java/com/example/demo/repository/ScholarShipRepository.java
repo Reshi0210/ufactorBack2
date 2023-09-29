@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ScholarShipRepository extends JpaRepository<Scholarship, Long> {
 
-    @Query("Select s from Scholarship s where s.ScholarLevel=:level")
+    @Query("Select s from Scholarship s where s.ScholarLevel=:level or  s.ScholarLevel='No_Procede'")
     public List<Scholarship> findScholarshipByScholarLevel(@Param("level") scholarLevel level);
 
 }
