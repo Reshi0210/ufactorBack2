@@ -7,6 +7,7 @@ import com.example.demo.models.Worker;
 import com.example.demo.repository.JpaUserDetailsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,5 +70,9 @@ public class JpaUserDetailsService implements UserDetailsService {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
+    }
+
+    public User getlogedUser(String userName){
+        return jpaUserDetailsRepository.findByUsername(userName).orElseThrow(() -> new ResourceNotFoundException("Missmatch error"));
     }
 }

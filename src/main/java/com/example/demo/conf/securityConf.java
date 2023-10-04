@@ -66,6 +66,7 @@ public class securityConf {
 				.cors().disable()
 				.authorizeRequests(auth -> auth
 				.mvcMatchers("/api/v1/login").permitAll()
+						.mvcMatchers("/api/v1/entidades/all").permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.anyRequest().authenticated())
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

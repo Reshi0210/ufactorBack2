@@ -62,8 +62,18 @@ public interface WorkerRepository extends PagingAndSortingRepository< Worker, Lo
 
 
 
+	  @Query("select w from Worker  w  where " +
+			  " (w.careerPlan.doctoradoF=:scholarship ) or" +
+			  " (w.careerPlan.masterF=:scholarship ) or" +
+			  " (w.careerPlan.posgrado1F=:scholarship ) or" +
+			  " (w.careerPlan.posgrado2F=:scholarship ) or" +
+			  " (w.careerPlan.formacionPiramidalF=:scholarship ) or" +
+			  " (w.careerPlan.IdiomaOptimoF=:scholarship ) or" +
+			  " (w.careerPlan.idiomaelementalF=:scholarship ) "
 
 
+			  )
+      public List<Worker> filterByNed(@Param("scholarship")Scholarship scholarship );
 
 
 

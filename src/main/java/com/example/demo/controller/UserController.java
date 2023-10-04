@@ -44,4 +44,10 @@ public class UserController {
 
         return jpaUserDetailsService.delete(id);
     }
+
+
+    @GetMapping("/getlogedUser/{userName}")
+    public User getlogedUser (@PathVariable("userName") String userName){
+        return jpaUserDetailsService.getlogedUser( userName);}
+
 }

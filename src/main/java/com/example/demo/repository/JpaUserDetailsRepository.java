@@ -9,4 +9,6 @@ public interface JpaUserDetailsRepository extends JpaRepository <User ,Long> {
 
 
    Optional<User> findByUsername(String username);
+
+
 }

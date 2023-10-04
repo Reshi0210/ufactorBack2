@@ -118,6 +118,10 @@ public class WorkerService {
 
 		return (List<Worker>) result;
 	}
+
+	public List<Worker> filterByNed(Scholarship scholarship){
+		return workerRepository.filterByNed(scholarship);
+	}
 	
 	
 

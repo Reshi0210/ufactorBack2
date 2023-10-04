@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,4 +24,10 @@ public class User {
     @JoinTable(name="users_roles",joinColumns = @JoinColumn(name = "users_id"),
                inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<Role> roles;
+
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "entidad_id")
+    // @JsonProperty(access = Access.WRITE_ONLY)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Entidad entidad;
 }

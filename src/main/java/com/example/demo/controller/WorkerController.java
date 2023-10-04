@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.models.*;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,11 +24,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.demo.models.Worker;
-import com.example.demo.models.contractType;
-import com.example.demo.models.defensePlace;
-import com.example.demo.models.race;
-import com.example.demo.models.sex;
 import com.example.demo.service.WorkerService;
 
 import utilities.AgeUtilities;
@@ -93,8 +89,12 @@ public class WorkerController {
 
 		return workerService.filterByCriteria(criteria);
 	}
-	
 
+	@PostMapping("/filterByNed")
+	public List<Worker> filterByNed(@RequestBody Scholarship scholarship) {
+
+		return workerService.filterByNed(scholarship);
+	}
 	
 
 

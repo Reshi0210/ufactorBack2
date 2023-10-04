@@ -87,7 +87,11 @@ public class Worker {
 	private CareerPlan careerPlan;
 
 
-
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JoinColumn(name = "entidad_id")
+	// @JsonProperty(access = Access.WRITE_ONLY)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private Entidad entidad;
 
 
 	
