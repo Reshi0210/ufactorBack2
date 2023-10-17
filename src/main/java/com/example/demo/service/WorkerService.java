@@ -81,7 +81,7 @@ public class WorkerService {
 
 	
 
-    public List<Worker>  filterE(Worker worker,Integer min,Integer max) {
+    public List<Worker>  filterE(Worker worker,Integer min,Integer max,String entidad) {
 		scholarLevel ScholarLevel;
 		String department;
 
@@ -101,26 +101,35 @@ public class WorkerService {
 		active active=worker.getActive();
 		sex sex=worker.getSex();
 		defensePlace defensePlace=worker.getDefensePlace();
-		return workerRepository.filter(ScholarLevel,firstName,secondName,lastName,race,contractType,expedientNumber,active,sex,defensePlace,department,min,max);
+		return workerRepository.filter(ScholarLevel,firstName,secondName,lastName,race,contractType,expedientNumber,active,sex,defensePlace,department,min,max,entidad);
 
 	}
 
 
-	public List<Worker> filterByCriteria(String criteria) {
+	public List<Worker> filterByCriteria(String criteria,String entidad) {
 
     LinkedList<Worker> result = new LinkedList<>();
 
-		result.addAll(workerRepository.findByFirstNameStartsWith(criteria));
+		result.addAll(workerRepository.findByFirstNameStartsWith(criteria,entidad));
 
 		if (result.isEmpty()) {
-			result.addAll(workerRepository.findByCiStartsWith(criteria));
+			result.addAll(workerRepository.findByCiStartsWith(criteria,entidad));
 		}
 
 		return (List<Worker>) result;
 	}
 
-	public List<Worker> filterByNed(Scholarship scholarship){
-		return workerRepository.filterByNed(scholarship);
+	public List<Worker> filterByNed(Scholarship scholarship,String entidad){
+		return workerRepository.filterByNed(scholarship,entidad);
+	}
+
+
+	public  Page<Worker> filterByEntidad(String entidad,Integer page, Integer size){
+
+	if(entidad.equals("Osde"))
+		return workerRepository.findAll(PageRequest.of(page,size)) ;
+	else{
+		return 	workerRepository.filterByEntidad(entidad,PageRequest.of(page,size));}
 	}
 	
 	

@@ -40,6 +40,7 @@ public class WorkerController {
 	public Page<Worker> FindAllWorkers(
 			  @RequestHeader @Nullable Integer page
 			, @RequestHeader @Nullable Integer size
+
 	) {
     if(page==null)page=0;
     if(size==null)size=50;
@@ -77,25 +78,37 @@ public class WorkerController {
 	@PostMapping("/filterE")
 	public List<Worker>filterByE(@RequestBody Worker workerExample
 			,@RequestHeader Integer min
-			,@RequestHeader Integer max) {
-		return workerService.filterE(workerExample,min,max);
+			,@RequestHeader Integer max
+			,@RequestHeader String entidad) {
+		return workerService.filterE(workerExample,min,max,entidad);
 
 
 
 	}
 
 	@PostMapping("/filterByCriteria")
-	public List<Worker> filterByCriteria(@RequestHeader("criteria") String criteria) {
+	public List<Worker> filterByCriteria(@RequestHeader("criteria") String criteria
+			                            ,@RequestHeader("entidad") String entidad) {
 
-		return workerService.filterByCriteria(criteria);
+		return workerService.filterByCriteria(criteria,entidad);
 	}
 
 	@PostMapping("/filterByNed")
-	public List<Worker> filterByNed(@RequestBody Scholarship scholarship) {
+	public List<Worker> filterByNed(@RequestBody Scholarship scholarship,
+									@RequestHeader("entidad") String entidad) {
 
-		return workerService.filterByNed(scholarship);
+		return workerService.filterByNed(scholarship,entidad);
 	}
-	
 
+	@PostMapping("/filterByEntidad")
+	public Page<Worker> filterByEntidad(@RequestHeader @Nullable String entidad,
+										@RequestHeader @Nullable Integer page,
+			                            @RequestHeader @Nullable Integer size
+	) {
+		if(page==null)page=0;
+		if(size==null)size=50;
+
+		return workerService.filterByEntidad(entidad,page,size);
+	}
 
 }
